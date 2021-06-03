@@ -8,6 +8,7 @@ mkdir dataset_ami
 
 cd dataset_creators/AMI
 python create_dataset.py
+python resolve_timestamp_ties.py
 python variant_tasks_creator.py
 python xmin_dataset_creator.py
 

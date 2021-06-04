@@ -5,6 +5,12 @@ import json
 from copy import deepcopy
 
 
+ami_section_names = ["abstract",
+            "actions",
+            "decisions",
+            "problems"]
+
+
 def get_utt(obj):
     return obj["speaker"]+" "+obj["txt"]
 
@@ -38,8 +44,26 @@ def patch_file(fpath):
                     trans1[first_tstamp]=second_obj
                     trans1[second_tstamp]=first_obj
                     print(id1, first_tstamp, " was SWAPPED")
+
+                    # adjusting the xmins accordingly
+                    for sec_name in ami_section_names:
+                        section = x1[sec_name]
+                        for entry in section:
+                            sorted_xmins = entry["sorted_xmins"]
+                            for i in range(len(sorted_xmins)):
+                                if sorted_xmins[i]==first_tstamp:
+                                    sorted_xmins[i]=second_tstamp
+                                elif sorted_xmins[i]==second_tstamp:
+                                    sorted_xmins[i]=first_tstamp
+                            sorted_xmins = sorted(sorted_xmins, key=lambda x:float(x))
+                            entry["sorted_xmins"] = sorted_xmins
+                            entry["xmin_interval"] = [sorted_xmins[0], sorted_xmins[-1]]
+
                 else:
                     print(id1, first_tstamp, " was OKAY")
+
+
+
 
     with jsonlines.open(fpath, "w") as w:
         for obj in x:

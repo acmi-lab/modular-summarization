@@ -2,6 +2,7 @@
 This repository contains the code for running modular summarization pipelines as described in the publication  
 `Krishna K, Khosla K, Bigham J, Lipton ZC. Generating SOAP Notes from Doctor-Patient Conversations." ACL 2021.`  
   
+The paper can be found here : https://aclanthology.org/2021.acl-long.384/
 
  
 ###  Instructions
